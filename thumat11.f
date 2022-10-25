@@ -41,11 +41,15 @@ c
 c Internal length as parameter 1 of thermal material card
        L = r_matp(8+ 1 )
 c       
-c Retrieve truly local damage (entry 1, see umat41) from mechanical subroutine history, herein named "hsvm"
-c @note Requires IHVE=1
+c Retrieve truly local damage (entry 1, see umat41) from mechanical subroutine history, herein named "hsvm". To be able to do this, we require IHVE=1, so we check this first:
+       if ( r_matp(4) .NE. 1 ) then
+            write(*,*) "thumat11<< ERROR. The gradient-enhancement
+     &requires IHVE=1 on *MAT_THERMAL_USER_DEFINED"
+            call cstop('E R R O R  T E R M I N A T I O N')
+       endif
        d_loc = hsvm(7+ 1 )
 c
-c Thermal Conductivity (parameter in front of Laplacian of temperature)
+c Thermal conductivity (parameter in front of Laplacian of temperature)
        c1 = L**2
 c
 c Other parameters of thermal conductivity are zero
