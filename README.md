@@ -1,7 +1,7 @@
 # Gradient-enhancement_thermomech_weaklyStaggered_Fortran_LS-Dyna
 Repository containing Fortran source code for the implementation of gradient-enhancement by weakly staggered thermomechanical coupling especially suitable for commerical FEM-Software, exemplified for LS-Dyna
 
-Here, exemplified for a gradient-damage model, so extending a scalar damage variable by a gradient. Also applicable for other scalar non-local variables.
+Here, the implementation is exemplified for a gradient-damage model, so extending a scalar damage variable by a gradient. This approach is also applicable for other scalar non-local variables.
 
 We focus on implicit time integration, but briefly refer to explicit time integration (see [Gradient enhanced damage: modelling, implementation and applications](https://www.researchgate.net/publication/357376191_Gradient_enhanced_damage_modelling_implementation_and_applications) for more details).
 
@@ -10,8 +10,7 @@ The files `umat41.f` and `thumat11.f` (both from ls-dyna_smp_d_R12_1_0_x64_cento
 
 <img src="https://github.com/jfriedlein/Gradient-enhancement_thermomech_weaklyStaggered_Fortran_LS-Dyna/blob/main/images/Gradient-enhancement%20-%20Numerical%20implementation%20-%20overview.png" width="1000">
 
-By this way you can directly apply the gradient-enhancement in LS-Dyna
-
+By this way you can directly apply the gradient-enhancement in LS-Dyna.
 
 ### Thermal user-defined material model
 A huge thanks to Marvin Nahrmann and Henning Schmidt for initially providing this file ([Details on the implementation](https://www.researchgate.net/publication/357376191_Gradient_enhanced_damage_modelling_implementation_and_applications), [Application and comparison](https://doi.org/10.1016/j.ijsolstr.2021.111166)).
@@ -154,7 +153,7 @@ Firstly, we need to activate a thermo-mechanical solution, that solves the mecha
 $#    soln       nlq     isnan     lcint     lcacc     ncdcf     
          2         0         0       100         0         1
 ```
-For the thermal user material thumat11, we need the card *MAT_THERMAL_USER_DEFINED with "ihve=1" (to be able to access the mechanical history `d_loc` in the thermal routine. Further, we set the parameter "p1" to 2, which is equal to our internal length L (depending on the unit system the internal length L is here for instance 2 mm).
+For the thermal user material thumat11, we need the card *MAT_THERMAL_USER_DEFINED with "ihve=1" to be able to access the mechanical history `d_loc` in the thermal routine. Further, we set the parameter "p1" to 2, which is equal to our internal length L (depending on the unit system the internal length L is here for instance 2 mm).
 ```
 *MAT_THERMAL_USER_DEFINED
 $#    tmid        ro        mt       lmc       nhv      aopt    iortho      ihve
