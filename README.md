@@ -5,6 +5,8 @@ Here, the implementation is exemplified for a gradient-damage model, so extendin
 
 We focus on implicit time integration, but briefly refer to explicit time integration (see [Gradient enhanced damage: modelling, implementation and applications](https://www.researchgate.net/publication/357376191_Gradient_enhanced_damage_modelling_implementation_and_applications) for more details).
 
+Details on the derivation and background can be found in [Regularised single surface formulation](https://doi.org/10.1002/pamm.202100068), and soon on dynalook an extended abstract and the complete presentation slides from the 16th LS-Dyna Forum.
+
 ## Overview of implementation for implicit time integration
 The files `umat41.f` and `thumat11.f` (both from ls-dyna_smp_d_R12_1_0_x64_centos610_ifort160) show the key parts of the implementation and are detailed in the following.
 
@@ -12,7 +14,7 @@ The files `umat41.f` and `thumat11.f` (both from ls-dyna_smp_d_R12_1_0_x64_cento
 
 By this way you can directly apply the gradient-enhancement in LS-Dyna.
 
-### Thermal user-defined material model
+### Thermal user-defined material model (see file thumat11.f)
 A huge thanks to Marvin Nahrmann and Henning Schmidt for initially providing this file ([Details on the implementation](https://www.researchgate.net/publication/357376191_Gradient_enhanced_damage_modelling_implementation_and_applications), [Application and comparison](https://doi.org/10.1016/j.ijsolstr.2021.111166)).
 
 Here, we exemplarily use the thermal user-defined material model 11 with the default arguments.
@@ -78,7 +80,7 @@ And this is it.
 You can leave this subroutine unchanged for all your user material models. The only thing that might change is the location of your truly local variable `d_loc` in hsvm. (Recommendation: use a [history variable manager](https://github.com/jfriedlein/history_hsv-manager_LS-Dyna))
 
 
-### User-defined material model
+### User-defined material model (see file umat41.f)
 Concering the user-defined material model `umat`, we focus on the changes that are needed to incorporate the gradient-enhancement. By adding the following lines of code, you can easily transform a local damage material model to a gradient-enhanced model (necessary keyword cards are listed below).
 
 We start in the umat41 subroutine with the default arguments.
@@ -146,7 +148,7 @@ Do not forget to alter the tangent in `utan` and if needed the linearisation of 
 ## Overview of implementation for explicit time integration
 The thermal user-defined material model is the same for explicit time integration. The changes in the user-defined material model are even simpler, because the explicit time steps are so small that hardly anything happens between them. Therefore, mimicking the change of the non-local variable by the non-local factor appears to be not necessary. Thus, you can directly use the non-local variable to affect the material behaviour. Details for explicit time integration see: [Gradient enhanced damage: modelling, implementation and applications](https://www.researchgate.net/publication/357376191_Gradient_enhanced_damage_modelling_implementation_and_applications).
 
-## Application and keyword cards
+## Application and keyword cards (see files keywords_materialModels.k and keywords_gradEnh.k)
 Firstly, we need to activate a thermo-mechanical solution, that solves the mechanical (umat) and thermal (thumat) problem together, by setting soln=2.
 ```
 *CONTROL_SOLUTION
