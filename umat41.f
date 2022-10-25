@@ -10,7 +10,7 @@ c ...
 c Compute the truly local damage "d_loc_n1" with whatever damage law you like, as before
         d_loc_n1 = ...
 c
-c The temperature "temper" contains the old non-local damage variable
+c The temperature "temper" contains the old non-local damage variable (this requires ITHERM=1)
         d_NL_n = temper
 c Retrieve the old truly local damage "d_loc_n" from the history "hsv"
         d_loc_n = hsv(1)
