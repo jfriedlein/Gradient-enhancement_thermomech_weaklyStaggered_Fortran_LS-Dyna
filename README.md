@@ -28,11 +28,21 @@ c
 ```
 Next, we declare two additional variables, namely the internal length parameter `L` and the truly local damage variable `d_loc`.
 ```fortran
-
-
-test
-
-
+       real*8 L, d_loc
+```
+We retrieve the internal length `L` from the thermal material parameters (entered as p1... on *MAT_THERMAL_USER_DEFINED). Here, the length parameter is the first parameter p1, so we extract the first entry "1". For details on the leading "8+", see docu in "dyn21tumat.f - thusrmat".
+```fortran
+L = r_matp(8+ 1 )
+```
+The truly local damage variable `d_loc` is, in this example (see `umat41.f`), stored as the first mechanical history variable "1". In the thermal material model the mechanical history is named `hsvm`. To be able to access this, we require IHVE=1 (see LS-Dyna manual Vol. I Appendix H), so we check this first:
+```fortran
+       if ( r_matp(4) .NE. 1 ) then
+            write(*,*) "thumat11<< ERROR. The gradient-enhancement
+     &requires IHVE=1 on *MAT_THERMAL_USER_DEFINED"
+            call cstop('E R R O R  T E R M I N A T I O N')
+       endif
+       d_loc = hsvm(7+ 1 )
+```
 
 ## How to make it better
 
