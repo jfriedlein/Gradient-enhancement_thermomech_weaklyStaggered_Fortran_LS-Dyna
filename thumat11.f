@@ -28,16 +28,13 @@ c          0       1.0       0.1       0.0         1       1e6       0.5        
 c
 c******************************************************************
 c
-       include 'nlqparm'
-       include 'iounits.inc'
+      include 'nlqparm'
+      include 'iounits.inc'
 c
-       character*(*) eltype
-       logical inithis
-       dimension hsv(*),hsvm(*),r_matp(*),crv(lq1,2,*)
-       integer nnpcrv(*)
-       real*8, intent(out) :: c1,c2,c3,cvl
-       real*8, intent(in) :: temp
-       real*8, intent(out) :: hsrcl       
+      character*(*) eltype
+      logical inithis
+      dimension hsv(*),hsvm(*),r_matp(*),crv(lq1,2,*)
+      integer nnpcrv(*)    
 c       
        real*8 L, d_loc
 c
