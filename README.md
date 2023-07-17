@@ -213,4 +213,6 @@ $#     pid     secid       mid     eosid      hgid      grav    adpopt      tmid
 R12.0 is goofy regarding the thermal solver
 In newer/older releases some variables might be named differently or located in different files, be aware of this!
 
+## Todos
+- add Q&A (e.g. what if still mesh-dependent, which ELFORM, what tests/benchmarks, ...)
 
